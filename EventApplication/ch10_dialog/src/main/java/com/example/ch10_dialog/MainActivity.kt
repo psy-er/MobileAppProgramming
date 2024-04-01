@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_main)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        // 추후 추가
         binding.btnDate.setOnClickListener {
 
         }
