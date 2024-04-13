@@ -11,23 +11,32 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.DatePicker
+
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ch10_dialog.databinding.ActivityMainBinding
 import com.example.ch10_dialog.databinding.DialogCustomBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    lateinit var binding : ActivityMainBinding
+    lateinit var toggle : ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Drawerlayout과 연결
+        toggle = ActionBarDrawerToggle(this, binding.drawer,R.string.drawer_opened, R.string.drawer_closed )
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toggle.syncState()
 
         // 추후 추가
         binding.btnDate.setOnClickListener {
@@ -177,24 +186,48 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    // 수업이랑 }} 개수가 다르다.. 확인해보기
     // Option Menu
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_navigation, menu)
+
+        val searchView = menu?.findItem(R.id.menu_search)?.actionView as SearchView // null 가능, as 캐스트
+        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Toast.makeText(applicationContext, "$query 검색합니다.", Toast.LENGTH_LONG).show()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
+
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(toggle.onOptionsItemSelected(item)){
+            return true
+        }
         when(item.itemId){
             R.id.item1 -> {
                 Log.d("mobileapp", "Option Menu : 메뉴 1")
                 binding.btnDate.setTextColor(Color.parseColor("#ffff00"))
                 true
             }
-            R.id.item2 -> true
-            R.id.item3 -> true
-            R.id.item4 -> true
+            R.id.item2 -> {
+                Log.d("mobileapp", "Option Menu : 메뉴 2")
+                true
+            }
+            R.id.item3 -> {
+                Log.d("mobileapp", "Option Menu : 메뉴 3")
+                true
+            }
+            R.id.item4 -> {
+                Log.d("mobileapp", "Option Menu : 메뉴 4")
+                true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
