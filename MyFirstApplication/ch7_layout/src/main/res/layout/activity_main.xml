@@ -22,13 +22,15 @@
         android:text="02-120"
         android:textSize="40dp"/>
 
+    <!-- LinearLayout을 중첩시켜 3개씩 끊어 다이얼 구성 가능 -->
+    <!-- 특정 뷰 배치 이후에는 순서대로 배치된다 -->
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="30dp"
         android:columnCount="3">
-
+        <!-- TextView 들여쓰기 하기 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,6 +63,8 @@
             android:text="3"
             android:textSize="30dp"
             android:textStyle="bold"/>
+
+        <!-- 3번 배치 이후 나머지 배치 순서대로 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,6 +118,7 @@
             android:text="8"
             android:textSize="30dp"
             android:textStyle="bold"/>
+            <!-- columnSpan, rowSpan을 2로 설정해서 다음 순서인 9가 밀려감 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,6 +130,7 @@
             android:textSize="30dp"
                 android:layout_gravity="fill_horizontal"
             android:textStyle="bold"/>
+            <!-- layout_gravity="fill_horizontal" 로 설정해서 6이랑 크기 맞추기-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -155,8 +161,9 @@
             android:text="#"
             android:textSize="30dp"
             android:textStyle="bold"/>
-</GridLayout>
-
+    </GridLayout>
+    <!-- 상대 뷰의 위치를 기준으로 정렬하는 레이아웃이다 -->
+    <!-- id를 만들때는 +기호, id를 참조할때는 +기호 뺌 -->
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -188,6 +195,7 @@
             android:layout_toRightOf="@id/icon_back"
             android:layout_alignBottom="@id/icon_back"
             android:layout_alignParentRight="true"/>
-    </RelativeLayout>
 
+            <!--layout_alignBottom="@id/icon_back" 백아이콘을 기준으로 아랫선을 맞춤-->
+    </RelativeLayout>
 </LinearLayout>
