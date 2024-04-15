@@ -1,10 +1,13 @@
 package com.example.jetpackapplication
 
+import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.jetpackapplication.databinding.FragmentOneBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,6 +39,23 @@ class OneFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val binding = FragmentOneBinding.inflate(inflater, container, false)
+
+        binding.fragButton.setOnClickListener {
+            binding.oneFragment.setBackgroundColor(Color.parseColor("#00ffff"))
+            // this는 activity를 뜻해서 fragment를 지정하도록 context 선언하기
+            Toast.makeText(context, "OneFragment", Toast.LENGTH_LONG).show()
+
+            context?.let{it1 -> // non-null만 들어올 수 있음
+            AlertDialog.Builder(context).run{
+                setTitle("알림")
+                setIcon(android.R.drawable.ic_dialog_alert)
+                setMessage("정말로 종료하시겠습니까?")
+                setPositiveButton("예", null)
+                setNegativeButton("아니오", null)
+                show()
+                }
+            }
+        }
 
         return binding.root
     }

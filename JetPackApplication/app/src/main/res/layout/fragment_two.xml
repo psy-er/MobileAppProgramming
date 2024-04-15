@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#00ff00"
+    layout_width="match_parent"
+    layout_height="match_parent"
     tools:context=".TwoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="#00ff00"
+        android:id="@+id/recyclerView">
 
-</FrameLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <!-- 루트 엘리먼트는 하나만 존재해야 한다 -> 묶어 준다 -->
+    <com.google.android.material.floatingactionbutton.ExtendedActionButton
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Add Item"
+        />
+
+</RelativeLayout>
