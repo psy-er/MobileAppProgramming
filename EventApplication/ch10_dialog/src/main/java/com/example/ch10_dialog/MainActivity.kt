@@ -24,6 +24,7 @@ import com.example.ch10_dialog.databinding.ActivityMainBinding
 import com.example.ch10_dialog.databinding.DialogCustomBinding
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var binding : ActivityMainBinding
     lateinit var toggle : ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +39,13 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toggle.syncState()
 
-        // 추후 추가
+        // 각 버튼마다 onclicklistener를 넣어준다
         binding.btnDate.setOnClickListener {
             // month만 0부터 시작한다
+            // DatePickerDialog에 있는 OnDateSetListener의 onDateSet 함수를 오버라이드
             DatePickerDialog(this, object : DatePickerDialog.OnDateSetListener {
+
+                // 다이얼로그에 toast를 띄우기 위해 this 대신 applicationContext 사용해 DataPickerDialog 불러오기
                 override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                     Toast.makeText(
                         applicationContext,
@@ -54,18 +58,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }, 2024, 3, 3).show()
         }
+
         binding.btnTime.setOnClickListener {
             TimePickerDialog(this, object : TimePickerDialog.OnTimeSetListener {
                 override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-                    Toast.makeText(applicationContext, "$hourOfDay 시 $minute 분", Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(applicationContext, "$hourOfDay 시 $minute 분", Toast.LENGTH_LONG
+                    ).show()
                     binding.btnTime.text = "$hourOfDay 시 $minute 분"
-                    binding.btnDate.textSize = 24f
-                    binding.btnDate.setTextColor(Color.parseColor("#ffff00"))
+                    binding.btnTime.textSize = 24f
+                    binding.btnTime.setTextColor(Color.parseColor("#ffff00"))
                 }
-
             }, 15, 29, true).show()
         }
+        // onClickListener 이벤트 핸들러 정의
         val eventHandler = object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 if (which == DialogInterface.BUTTON_POSITIVE) {
@@ -75,6 +80,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
         binding.btnAlert.setOnClickListener {
             AlertDialog.Builder(this).run() {
                 setTitle("알림창 - 모앱")
