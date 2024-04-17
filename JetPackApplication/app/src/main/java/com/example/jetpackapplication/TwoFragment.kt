@@ -95,7 +95,8 @@ class TwoFragment : Fragment() {
         }
 
         // adpter & viewHolder 작성 필수이다. MyAdapter 클래스 만든다.
-        binding.recyclerView.adapter = MyAdapter(datas)
+        var adapter = MyAdapter(datas)
+        binding.recyclerView.adapter = adapter
 
         // layoutManager로 배치하기
         var linearlayout = LinearLayoutManager(activity)
@@ -108,6 +109,11 @@ class TwoFragment : Fragment() {
 
         // 선택적
         binding.recyclerView.addItemDecoration(MyItemDecoration(activity as Context))
+
+        binding.mainFab.setOnClickListener{
+            datas.add("Add Item")
+            adapter.notifyDataSetChanged() // adapter 변경 알려줌
+        }
 
         return binding.root
     }
