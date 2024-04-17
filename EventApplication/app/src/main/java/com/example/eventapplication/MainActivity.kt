@@ -12,32 +12,43 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.eventapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    // 전역변수를 설정해서 백키누른 횟수 고려
     var initTime = 0L
 
+    // onCreate 함수에서는 위젯에서 발생할 수 있는 이벤트를 설정한다
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // 기본 코틀린 코드
+
+        // build.gradle에 view Binding 설정을 해서 ActivityMainBinding 클래스 자동 생성
+        // inflate 함수를 사용해서 XML파일을 코틀린에 불러옴
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // 위아래 같은 방식임
-        //setContentView(R.layout.activity_main)
 
+        //setContentView(R.layout.activity_main) 대체 가능
+
+        // stop한 시간을 알려주기 위한 변수
         var prevTime = 0L
 
+        // Activity_main에 있는 버튼들을 바인딩에서 불러와 사용 가능
+        // 코틀린에서도 위젯의 성질을 변화시킬 수 있다.
         binding.startButton.text = "시작"
         binding.startButton.textSize = 24.0f
 
         // 코틀린에서도 위젯의 성질을 변화시킬 수 있다.
+        // 힌트 view 타입의 it이라는 변수를 쓰겠다.
+        // 버튼 활성화와 비활성화
         binding.startButton.setOnClickListener {
             binding.chronometer.base = SystemClock.elapsedRealtime() + prevTime
             binding.chronometer.start()
 
             binding.startButton.isEnabled = false
-            binding.stopButton.isEnabled = true // ??
+            binding.stopButton.isEnabled = true
             binding.resetButton.isEnabled = true
         }
         binding.stopButton.setOnClickListener{
-            prevTime = binding.chronometer.base - SystemClock.elapsedRealtime() // start~stop 시간 저장
+            // start~stop까지 시간 저장
+            prevTime = binding.chronometer.base - SystemClock.elapsedRealtime()
             binding.chronometer.stop()
 
             binding.stopButton.isEnabled = false
@@ -54,6 +65,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    // back 키를 두번 눌렀을 때 종료되도록 설정하기
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when(keyCode){
             KeyEvent.KEYCODE_BACK -> {
@@ -62,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                     initTime = System.currentTimeMillis() // 처음 Back을 누른 시간이 저장
 
                     Toast.makeText(this, "Back key가 눌렸어요.. 종료하려면 한번 더 누르세요..", Toast.LENGTH_LONG).show()
-                    return true
+                    return true // back key 처리는 하지만, 종료하지 않는다.
                 }
             }
             KeyEvent.KEYCODE_VOLUME_UP -> Log.d("mobileapp","VOLUME_UP key가 눌렸어요..")
