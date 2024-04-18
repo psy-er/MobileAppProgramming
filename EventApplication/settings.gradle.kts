@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "EventApplication"
 include(":app")
 include(":ch10_dialog")
+include(":ch13_activity")

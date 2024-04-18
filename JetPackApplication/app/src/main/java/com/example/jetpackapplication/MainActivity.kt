@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.jetpackapplication.databinding.ActivityMainBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
@@ -33,5 +34,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.viewpager.adapter = MyFragmentPagerAdapter(this)
+
+        TabLayoutMediator(binding.tabs, binding.viewpager){
+            tab, position ->
+                tab.text = "TAB ${position+1}"
+        }.attach()
     }
 }
