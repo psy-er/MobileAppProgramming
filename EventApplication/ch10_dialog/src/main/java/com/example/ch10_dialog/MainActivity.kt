@@ -22,8 +22,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ch10_dialog.databinding.ActivityMainBinding
 import com.example.ch10_dialog.databinding.DialogCustomBinding
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var binding : ActivityMainBinding
     lateinit var toggle : ActionBarDrawerToggle
@@ -34,10 +35,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Drawerlayout과 연결
-        toggle = ActionBarDrawerToggle(this, binding.drawer,R.string.drawer_opened, R.string.drawer_closed )
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // Drawerlayout과 연결, binding.id(drawer)와 연결, res에 있는 string 불러오기
+        toggle = ActionBarDrawerToggle(this, binding.drawer ,R.string.drawer_opened, R.string.drawer_closed )
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // 화면에 보여짐
         toggle.syncState()
+
+        binding.mainDrawerView.setNavigationItemSelectedListener(this)
 
         // 각 버튼마다 onclicklistener를 넣어준다
         binding.btnDate.setOnClickListener {
@@ -81,6 +84,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // [Dialog 알림창 구현]
+
         binding.btnAlert.setOnClickListener {
             AlertDialog.Builder(this).run() {
                 setTitle("알림창 - 모앱")
@@ -93,17 +98,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // [SetItems로 목록 출력 알림창 구현]
+
         val items = arrayOf<String>("빨강", "노랑", "파랑", "초록")
         binding.btnAlertItem.setOnClickListener {
             AlertDialog.Builder(this).run() {
                 setTitle("알림창 - 아이템")
                 setIcon(android.R.drawable.ic_dialog_alert)
                 setItems(items, object : DialogInterface.OnClickListener {
+
+                    // which : 선택한 위치 받아오기
                     override fun onClick(dialog: DialogInterface?, which: Int) {
                         Log.d("mobileapp", "${items[which]} 선택")
                         binding.btnAlertItem.text = "${items[which]} 선택"
                     }
                 })
+                // 버튼이 없으면 바로 반영된다.
                 setPositiveButton("예", eventHandler)
                 setNegativeButton("아니오", eventHandler)
                 //setNeutralButtom("상세정보", null)
@@ -111,7 +121,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-            var selected = 0
+            var selected = 0 // 위치값 저장 변수
             val eventHandler2 = object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface?, which: Int) {
                     if (which == DialogInterface.BUTTON_POSITIVE) {
@@ -123,12 +133,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            // [SetSingleChoice로 목록 출력 알림창 구현 => Radio 버튼으로 보임]
+            // checkedItem을 1로 설정하여 제품을 하나만 선택하기
+            // 선택한 위치 정보 제공
             binding.btnAlertSingle.setOnClickListener {
                 AlertDialog.Builder(this).run() {
                     setTitle("알림창 - Single")
                     setIcon(android.R.drawable.ic_dialog_alert)
                     setSingleChoiceItems(items, 1, object : DialogInterface.OnClickListener {
-
                         override fun onClick(dialog: DialogInterface?, which: Int) {
                             Log.d("mobileapp", "${items[which]} 선택")
                             selected = which
@@ -140,17 +152,14 @@ class MainActivity : AppCompatActivity() {
                     show()
                 }
             }
+
+            // 선택한 위치 정보, 체크 정보 제공
             binding.btnAlertMulti.setOnClickListener {
                 AlertDialog.Builder(this).run() {
                     setTitle("알림창 - 다수 선택")
                     setIcon(android.R.drawable.ic_dialog_alert)
-
                     setMultiChoiceItems(items, booleanArrayOf(false, true, true, false), object:DialogInterface.OnMultiChoiceClickListener{
-                        override fun onClick(
-                            dialog: DialogInterface?,
-                            which: Int,
-                            isChecked: Boolean
-                        ) {
+                        override fun onClick(dialog: DialogInterface?, which: Int, isChecked: Boolean) {
                             Log.d("mobileapp", "${items[which]} ${if(isChecked) "선택" else "해제"}")
                         }
                     })
@@ -173,6 +182,12 @@ class MainActivity : AppCompatActivity() {
                         else if(dialogBinding.rbtn2.isChecked){
                             binding.btnAlertCustom.text = dialogBinding.rbtn2.text.toString()
                         }
+                        else if(dialogBinding.rbtn3.isChecked){
+                            binding.btnAlertCustom.text = dialogBinding.rbtn3.text.toString()
+                        }
+                        else if(dialogBinding.rbtn4.isChecked){
+                            binding.btnAlertCustom.text = dialogBinding.rbtn4.text.toString()
+                        }
                     } else if (which == DialogInterface.BUTTON_NEGATIVE) {
                         Log.d("mobileapp", "BUTTON_NEGATIVE")
                     }
@@ -185,18 +200,45 @@ class MainActivity : AppCompatActivity() {
                     setIcon(android.R.drawable.ic_dialog_alert)
 
                     setView(dialogBinding.root)
-
+                    // 이벤트 핸들러는 버튼으로 처리시에만 사용하면 된다.
                     setPositiveButton("예", eventHandler3)
                     setNegativeButton("아니오", eventHandler3)
                     show()
                 }
             }
-        }
-    // Option Menu
+        } // onCreate()
 
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.item1 -> {
+                Log.d("mobileapp", "Navigation Menu : 메뉴 1")
+                binding.btnDate.setTextColor(Color.parseColor("#ffff00"))
+                true
+            }
+            R.id.item2 -> {
+                Log.d("mobileapp", "Navigation Menu : 메뉴 2")
+                true
+            }
+            R.id.item3 -> {
+                Log.d("mobileapp", "ONavigation Menu : 메뉴 3")
+                true
+            }
+            R.id.item4 -> {
+                Log.d("mobileapp", "Navigation Menu : 메뉴 4")
+                true
+            }
+        }
+        return false
+    }
+
+    // Option Menu를 위한 오버라이드 함수
+    // onCreateOptionMenu는 미리 만들어 놓은 메뉴를 코틀린이 사용할 수 있게 만듦
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // 메뉴 화면 구성 가지고 옴
+        // res/menu/menu.navigation을 가지고 옴 -> ... 메뉴가 생김
         menuInflater.inflate(R.menu.menu_navigation, menu)
 
+        // 여러가지 액션뷰 중에 서치뷰 지정
         val searchView = menu?.findItem(R.id.menu_search)?.actionView as SearchView // null 가능, as 캐스트
         searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -212,7 +254,9 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    // 옵션 선택했을때 동작
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // 토글 본래의 기능을 실행
         if(toggle.onOptionsItemSelected(item)){
             return true
         }

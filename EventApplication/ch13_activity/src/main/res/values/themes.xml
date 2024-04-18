@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <!-- default가 NoActionBar인 부분을 삭제하면 액션바가 나온다 -->
-    <style name="Base.Theme.EventApplication" parent="Theme.Material3.DayNight">
+    <style name="Base.Theme.EventApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
