@@ -24,6 +24,7 @@ import com.example.ch10_dialog.databinding.ActivityMainBinding
 import com.example.ch10_dialog.databinding.DialogCustomBinding
 import com.google.android.material.navigation.NavigationView
 
+// NavigationView.OnNavigationItemSelectedListener에 관한 부분을 onCreate() 밖에 선언
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var binding : ActivityMainBinding
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // 화면에 보여짐
         toggle.syncState()
 
+        // 아이템이 클릭할 때마다 리스너가 붙여진다
         binding.mainDrawerView.setNavigationItemSelectedListener(this)
 
         // 각 버튼마다 onclicklistener를 넣어준다
@@ -208,6 +210,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         } // onCreate()
 
+    //
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.item1 -> {
@@ -220,7 +223,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 true
             }
             R.id.item3 -> {
-                Log.d("mobileapp", "ONavigation Menu : 메뉴 3")
+                Log.d("mobileapp", "Navigation Menu : 메뉴 3")
                 true
             }
             R.id.item4 -> {

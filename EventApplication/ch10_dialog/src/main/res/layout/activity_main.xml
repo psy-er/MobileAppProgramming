@@ -66,7 +66,7 @@
 
     <!-- 정렬 gravity, layout_gravity="start"는 드로어가 왼쪽 위치 -->
     <!-- 정렬 gravity, layout_gravity="end"는 드로어가 오른쪽 위치 -->
-
+    <!-- 헤더 레이아웃과 메뉴 레이아웃 설정 -->
     <com.google.android.material.navigation.NavigationView
         android:layout_width="300dp"
         android:layout_height="match_parent"
