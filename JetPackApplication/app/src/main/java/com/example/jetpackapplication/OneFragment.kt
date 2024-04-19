@@ -45,7 +45,9 @@ class OneFragment : Fragment() {
             // this는 activity를 뜻해서 fragment를 지정하도록 context 선언하기
             Toast.makeText(context, "OneFragment", Toast.LENGTH_LONG).show()
 
-            context?.let{it1 -> // non-null만 들어올 수 있음
+            // let으로 묶어 non-null만 들어올 수 있게
+            // it1은 컨텍스트를 의미
+            context?.let{it1 ->
             AlertDialog.Builder(context).run{
                 setTitle("알림")
                 setIcon(android.R.drawable.ic_dialog_alert)

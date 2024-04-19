@@ -15,14 +15,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
 
     class MyFragmentPagerAdapter(activity: FragmentActivity): FragmentStateAdapter(activity){ // 상속
-        val fragments : List<Fragment>
+        val fragments : List<Fragment> // 3개의 Fragment 저장
         init{
             fragments = listOf(OneFragment(), TwoFragment(), ThreeFragment())
         }
         override fun getItemCount(): Int {
             return fragments.size
         }
-
+        // 0->onefragment, 1->twofragment, 2->threefragment
         override fun createFragment(position: Int): Fragment {
             return fragments[position]
         }
@@ -33,8 +33,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 뷰 페이저와 Adapter 연결
         binding.viewpager.adapter = MyFragmentPagerAdapter(this)
 
+        // 뷰 페이저와 Tab 연결
         TabLayoutMediator(binding.tabs, binding.viewpager){
             tab, position ->
                 tab.text = "TAB ${position+1}"

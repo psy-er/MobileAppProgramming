@@ -16,10 +16,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 안드로이드에서 시스템쪽으로 인텐트를 전달
         binding.btnMain.setOnClickListener {
             val intent = Intent(this, AddActivity::class.java)
             startActivity(intent)
         }
-
     }
 }

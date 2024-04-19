@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--  XML 파일에서 아이템을 어떻게 배치할 것인지 정하기 -->
+<!-- height를 wrap-content로 해서 여러 항목들이 보이게 하자 -->
 <LinearLayout
     android:id="@+id/item_root"
     xmlns:android="http://schemas.android.com/apk/res/android"

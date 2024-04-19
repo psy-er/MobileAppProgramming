@@ -12,6 +12,7 @@
         android:id="@+id/recyclerView"
         android:background="#00ff00" >
     </androidx.recyclerview.widget.RecyclerView>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/main_fab"
         android:layout_width="wrap_content"

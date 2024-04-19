@@ -8,6 +8,7 @@
     android:background="#ffaacc"
     tools:context=".AddActivity">
 
+    <!-- id 값을 부여해 서로 다름 확인 -->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
