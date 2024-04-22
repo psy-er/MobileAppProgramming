@@ -8,8 +8,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EventApplication">
+
+        <!-- 부모 자식 관계 설정 -->
         <activity
             android:name=".AddActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

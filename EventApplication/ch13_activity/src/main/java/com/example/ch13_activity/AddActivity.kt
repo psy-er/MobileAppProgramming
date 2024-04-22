@@ -1,5 +1,6 @@
 package com.example.ch13_activity
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +14,21 @@ class AddActivity : AppCompatActivity() {
         val binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnAdd.setOnClickListener {
+        var date = intent.getStringExtra("today")
+        binding.date.text = date
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.btnSave.setOnClickListener {
+            val intent = intent
+            intent.putExtra("result", binding.addEditView.text.toString())
+            setResult(Activity.RESULT_OK, intent)
+
             finish()
             true
         }
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        return super.onSupportNavigateUp()
     }
 }
