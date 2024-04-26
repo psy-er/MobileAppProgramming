@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <!-- LinearLayout에서는 배치하는 순서에 맞춰서 배치된다 -->
+
     <!-- viewpager가 화면을 다써서 탭이 보이지 않는다 -->
     <!-- android:layout_height="0dp"
          android:layout_weight="1" 설정하면 먼저 tab 지정, 남은 부분 뷰페이저-->

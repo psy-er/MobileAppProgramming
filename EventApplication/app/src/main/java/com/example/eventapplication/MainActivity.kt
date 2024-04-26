@@ -70,12 +70,13 @@ class MainActivity : AppCompatActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when(keyCode){
             KeyEvent.KEYCODE_BACK -> {
+                // back 키 처음 누른 경우 프로그램이 종료되지 않는다
                 if(System.currentTimeMillis() - initTime > 3000) { // 3000ms는 3초이다.
                     Log.d("mobileapp","Back key가 눌렸어요.. 종료하려면 한번 더 누르세요..")
                     initTime = System.currentTimeMillis() // 처음 Back을 누른 시간이 저장
 
                     Toast.makeText(this, "Back key가 눌렸어요.. 종료하려면 한번 더 누르세요..", Toast.LENGTH_LONG).show()
-                    return true // back key 처리는 하지만, 종료하지 않는다.
+                    return true // back key 처리는 하지만, 프로그램을 종료하지 않는다.
                 }
             }
             KeyEvent.KEYCODE_VOLUME_UP -> Log.d("mobileapp","VOLUME_UP key가 눌렸어요..")
