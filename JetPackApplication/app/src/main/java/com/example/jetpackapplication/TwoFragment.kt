@@ -28,12 +28,10 @@ class MyAdapter(val datas:MutableList<String>): RecyclerView.Adapter<RecyclerVie
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyViewHolder(ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = (holder as MyViewHolder).binding
         binding.itemData.text = datas[position]
     }
-
     override fun getItemCount(): Int {
         return datas.size
     }
@@ -45,8 +43,7 @@ class MyItemDecoration(val context: Context):RecyclerView.ItemDecoration(){
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         // 그림 -> 항목
         super.onDraw(c, parent, state)
-        c.drawBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.kbo),
-            0f, 0f, null)
+        c.drawBitmap(BitmapFactory.decodeResource(context.resources, R.drawable.kbo), 0f, 0f, null)
     }
 
     // 배치 후 꾸미기
@@ -86,6 +83,7 @@ class TwoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         // 바인딩 할 layout이름+Binding
         val binding = FragmentTwoBinding.inflate(inflater, container, false)

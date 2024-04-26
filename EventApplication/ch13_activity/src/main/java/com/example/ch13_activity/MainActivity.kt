@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // outState에서 저장한 값이 있으면 사용하겠다
         datas = savedInstanceState?.let {
             it.getStringArrayList("datas")?.toMutableList()
         } ?: let{
@@ -32,18 +33,21 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter //MyAdapter(datas)
 
         val layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = layoutManager
 
         binding.recyclerView.addItemDecoration(
             DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         )
 
+        // AddActivity에서 값이 들어오면
         val requestLauncher: ActivityResultLauncher<Intent>
         = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
         {
             it.data!!.getStringExtra("result")?.let{
-                datas?.add(it)
-                adapter.notifyDataSetChanged()
+                if(it != ""){
+                    datas?.add(it)
+                    adapter.notifyDataSetChanged() // 바뀐표시
+                }
             }
         }
 
@@ -60,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        // 데이터를 저장한다.
         outState.putStringArrayList("datas", ArrayList(datas))
     }
 }

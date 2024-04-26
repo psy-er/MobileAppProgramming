@@ -12,10 +12,13 @@ import com.example.jetpackapplication.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var binding : ActivityMainBinding
 
     class MyFragmentPagerAdapter(activity: FragmentActivity): FragmentStateAdapter(activity){ // 상속
+
         val fragments : List<Fragment> // 3개의 Fragment 저장
+
         init{
             fragments = listOf(OneFragment(), TwoFragment(), ThreeFragment())
         }
@@ -38,8 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         // 뷰 페이저와 Tab 연결
         TabLayoutMediator(binding.tabs, binding.viewpager){
-            tab, position ->
-                tab.text = "TAB ${position+1}"
+            tab, position -> tab.text = "TAB ${position+1}"
         }.attach()
     }
 }

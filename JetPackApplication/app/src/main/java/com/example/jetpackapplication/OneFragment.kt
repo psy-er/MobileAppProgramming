@@ -42,7 +42,6 @@ class OneFragment : Fragment() {
 
         binding.fragButton.setOnClickListener {
             binding.oneFragment.setBackgroundColor(Color.parseColor("#00ffff"))
-            // this는 activity를 뜻해서 fragment를 지정하도록 context 선언하기
             Toast.makeText(context, "OneFragment", Toast.LENGTH_LONG).show()
 
             // let으로 묶어 non-null만 들어올 수 있게
@@ -58,7 +57,6 @@ class OneFragment : Fragment() {
                 }
             }
         }
-
         return binding.root
     }
 
