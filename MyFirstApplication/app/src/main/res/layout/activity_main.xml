@@ -26,7 +26,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/duksae_small" />
+        android:src="@drawable/ic_launcher_background" />
 
     <EditText
         android:id="@+id/editTextText"
