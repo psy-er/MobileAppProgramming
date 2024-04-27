@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/drawer"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
+
+    <!-- 1. 본화면 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <!-- LinearLayout에서는 배치하는 순서에 맞춰서 배치된다 -->
+
+        <!-- viewpager가 화면을 다써서 탭이 보이지 않는다 -->
+        <!-- android:layout_height="0dp"
+             android:layout_weight="1" 설정하면 먼저 tab 지정, 남은 부분 뷰페이저-->
+
+        <!-- AppBar는 앱 화면을 뜻한다.... -->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_margin="50dp"
+            android:src="@drawable/ic_launcher_background" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabs" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/viewpager">
+        </androidx.viewpager2.widget.ViewPager2>
+
+    </LinearLayout>
+
+
+    <!-- 2. 드로어 옆(background) 화면 -->
+    <!--DrawerLayout에 NavigationView를 배치해보자 -->
+
+    <!-- 정렬 gravity, layout_gravity="start"는 드로어가 왼쪽 위치 -->
+    <!-- 정렬 gravity, layout_gravity="end"는 드로어가 오른쪽 위치 -->
+
+    <!-- 헤더 레이아웃과 메뉴 레이아웃 설정 -->
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:gravity="center"
+        android:fitsSystemWindows="true"
+        android:id="@+id/mainDrawerView"
+        app:headerLayout="@layout/navigation_header"
+        app:menu="@menu/menu_provider"
+        />
+
+</androidx.drawerlayout.widget.DrawerLayout>
