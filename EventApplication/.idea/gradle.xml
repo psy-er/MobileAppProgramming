@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/ch10_dialog" />
             <option value="$PROJECT_DIR$/ch13_activity" />
+            <option value="$PROJECT_DIR$/ch17_storage" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
