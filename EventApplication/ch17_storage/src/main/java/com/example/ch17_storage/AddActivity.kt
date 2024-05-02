@@ -1,11 +1,17 @@
 package com.example.ch17_storage
 
 import android.app.Activity
+import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.preference.PreferenceManager
 import com.example.ch17_storage.databinding.ActivityAddBinding
 import java.io.File
 import java.io.OutputStreamWriter
@@ -13,12 +19,18 @@ import java.text.SimpleDateFormat
 
 class AddActivity : AppCompatActivity() {
     lateinit var binding: ActivityAddBinding
+    lateinit var sharedPreference : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding= ActivityAddBinding.inflate(layoutInflater)
+        binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreference = PreferenceManager.getDefaultSharedPreferences(this)
+        val color = sharedPreference.getString("color", "")
+        binding.date.setTextColor(Color.parseColor(color))
+
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -26,14 +38,14 @@ class AddActivity : AppCompatActivity() {
         binding.date.text = date
 
         binding.btnSave.setOnClickListener {
-            val edt_srt = binding.addEditView.text.toString()
+            val edt_str = binding.addEditView.text.toString()
             val intent = intent
-            intent.putExtra("result", binding.addEditView.text.toString())
+            intent.putExtra("result", edt_str)
             setResult(Activity.RESULT_OK, intent)
 
             // db에 저장하기
             val db = DBHelper(this).writableDatabase
-            db.execSQL("insert into todo_tb (todo) values (?)", arrayOf<String>(edt_srt))
+            db.execSQL("insert into todo_tb (todo) values (?)", arrayOf<String>(edt_str))
             db.close()
 
             // 파일 저장하기
@@ -54,4 +66,17 @@ class AddActivity : AppCompatActivity() {
         finish()
         return true
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_setting, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId === R.id.menu_main_setting) {
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
+    } // onCreate()
 }
