@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "JoyceApplication"
 include(":app")
- 
+include(":ch18_image")
+include(":ch18_image2")
+include(":ch18_images")
