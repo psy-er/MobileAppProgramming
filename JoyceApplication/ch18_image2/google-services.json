@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "267033509681",
+    "project_id": "seyfirebase",
+    "storage_bucket": "seyfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267033509681:android:f4129de51a194927883a10",
+        "android_client_info": {
+          "package_name": "com.example.ch18_image2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI5G3AVnscaE-g8rIl-__TYH2aWbnv9c0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
