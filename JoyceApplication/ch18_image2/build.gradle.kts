@@ -56,6 +56,12 @@ dependencies {
     implementation("com.tickaroo.tikxml:retrofit-converter:0.8.13")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     kapt("com.tickaroo.tikxml:processor:0.8.13")
+
     implementation("com.github.bumptech.glide:glide:4.12.0")
+
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+
+    implementation("com.google.firebase:firebase-auth-ktx:23.0.0")
+
+    implementation("androidx.multidex:multidex:2.0.1")
 }
