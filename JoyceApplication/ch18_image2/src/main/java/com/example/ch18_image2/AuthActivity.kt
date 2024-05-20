@@ -10,6 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.ch18_image2.databinding.ActivityAuthBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
 
 class AuthActivity : AppCompatActivity() {
     lateinit var binding: ActivityAuthBinding
@@ -89,7 +93,7 @@ class AuthActivity : AppCompatActivity() {
             Log.d("mobileapp", "로그 아웃")
             finish()
         }
-        /*
+
         val requestLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
             Log.d("mobileapp","account1 : ${task.toString()}")
@@ -127,7 +131,7 @@ class AuthActivity : AppCompatActivity() {
             val signInIntent = GoogleSignIn.getClient(this,gso).signInIntent
             requestLauncher.launch(signInIntent)
         }
-        */
+
     }
 
     fun changeVisibility(mode:String){

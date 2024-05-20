@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -63,40 +64,45 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         binding.btnSearch.setOnClickListener{
-            val name = binding.edtName.text.toString()
-            Log.d("mobileapp", name)
+            if(MyApplication.checkAuth()){
+                val name = binding.edtName.text.toString()
+                Log.d("mobileapp", name)
 
-            val call: Call<XmlResponse> = RetrofitConnection.xmlNetworkService.getXmlList(
-                name,
-                1,
-                10,
-                "xml",
-                "eAwLcv+UvTothYoSGVNMD0RoGDfKckaMKN4LiBfwtnRi/z0i5/MEN3OgHv/JeKUJ7T0WFsE3p3bHIio0q5Hm0Q==" // 일반인증키(Decoding)
-            )
+                val call: Call<XmlResponse> = RetrofitConnection.xmlNetworkService.getXmlList(
+                    name,
+                    1,
+                    10,
+                    "xml",
+                    "eAwLcv+UvTothYoSGVNMD0RoGDfKckaMKN4LiBfwtnRi/z0i5/MEN3OgHv/JeKUJ7T0WFsE3p3bHIio0q5Hm0Q==" // 일반인증키(Decoding)
+                )
 
-            call?.enqueue(object : Callback<XmlResponse> {
-                override fun onResponse(call: Call<XmlResponse>, response: Response<XmlResponse>) {
-                    if(response.isSuccessful){
-                        Log.d("mobileApp", "$response")
-                        Log.d("mobileApp", "${response.body()}")
-                        binding.xmlRecyclerView.layoutManager =
-                            LinearLayoutManager(applicationContext)
-                        binding.xmlRecyclerView.adapter =
-                            XmlAdapter(response.body()!!.body!!.items!!.item)
-                        binding.xmlRecyclerView.addItemDecoration(
-                            DividerItemDecoration(
-                                applicationContext,
-                                LinearLayoutManager.VERTICAL
+                call?.enqueue(object : Callback<XmlResponse> {
+                    override fun onResponse(call: Call<XmlResponse>, response: Response<XmlResponse>) {
+                        if(response.isSuccessful){
+                            Log.d("mobileApp", "$response")
+                            Log.d("mobileApp", "${response.body()}")
+                            binding.xmlRecyclerView.layoutManager =
+                                LinearLayoutManager(applicationContext)
+                            binding.xmlRecyclerView.adapter =
+                                XmlAdapter(response.body()!!.body!!.items!!.item)
+                            binding.xmlRecyclerView.addItemDecoration(
+                                DividerItemDecoration(
+                                    applicationContext,
+                                    LinearLayoutManager.VERTICAL
+                                )
                             )
-                        )
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<XmlResponse>, t: Throwable) {
-                    Log.d("mobileApp", "onFailure ${call.request()}")
-                }
-            })
-        }
+                    override fun onFailure(call: Call<XmlResponse>, t: Throwable) {
+                        Log.d("mobileApp", "onFailure ${call.request()}")
+                    }
+                })
+            }
+            else{
+                Toast.makeText(this,"인증을 먼저 진행해주세요..", Toast.LENGTH_LONG)
+            }
+        } // binding.btnSearch.setOnClickListener
 
     }
 
@@ -111,6 +117,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // Drawer 메뉴
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.item_board ->{
+                Log.d("mobileapp", "게시판 메뉴")
+                val intent = Intent(this, BoardActivity::class.java)
+                startActivity(intent)
+                binding.drawer.closeDrawers()
+                true
+            }
+
             R.id.item_setting -> {
                 Log.d("mobileapp", "설정 메뉴")
                 binding.drawer.closeDrawers()

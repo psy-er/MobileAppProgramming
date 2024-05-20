@@ -4,12 +4,14 @@ import androidx.multidex.MultiDexApplication
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 // Dex : Dalvic Executable (64K) 까지만 가능하다.
 class MyApplication : MultiDexApplication() {
     companion object{
         lateinit var auth : FirebaseAuth
         var email:String? = null
+        lateinit var db : FirebaseFirestore
 
         fun checkAuth(): Boolean{
             var currentUser = auth.currentUser
@@ -22,6 +24,8 @@ class MyApplication : MultiDexApplication() {
     }
     override fun onCreate(){
         super.onCreate()
+        
         auth = Firebase.auth
+        db = FirebaseFirestore.getInstance()
     }
 }
