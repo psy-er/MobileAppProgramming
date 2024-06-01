@@ -8,27 +8,28 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ch18_image2.RetrofitConnection
+import com.example.ch18_image2.XmlAdapter
+import com.example.ch18_image2.XmlResponse
 import com.example.ch18_image2.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener { // Drawer 메뉴
     lateinit var binding: ActivityMainBinding
+
     // DrawerLayout Toggle
     lateinit var toggle: ActionBarDrawerToggle
 
     lateinit var headerView : View
-    override fun onCreate(savedInstanceState: Bundle?) {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 0
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -47,19 +48,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Drawer 메뉴
         binding.mainDrawerView.setNavigationItemSelectedListener(this)
 
-        headerView = binding.mainDrawerView.getHeaderView(0) // 네비게이션 뷰
+        headerView = binding.mainDrawerView.getHeaderView(0)
         val button = headerView.findViewById<Button>(R.id.btnAuth)
         button.setOnClickListener {
             Log.d("mobileapp", "button.setOnClickListener")
 
-            val intent = Intent(this,AuthActivity::class.java)
+            val intent = Intent(this, AuthActivity::class.java)
             if(button.text.equals("로그인")){
-                intent.putExtra("status","logout")
+                intent.putExtra("status", "logout")
             }
             else if(button.text.equals("로그아웃")){
                 intent.putExtra("status", "login")
             }
             startActivity(intent)
+
             binding.drawer.closeDrawers()
         }
 
@@ -79,29 +81,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 call?.enqueue(object : Callback<XmlResponse> {
                     override fun onResponse(call: Call<XmlResponse>, response: Response<XmlResponse>) {
                         if(response.isSuccessful){
-                            Log.d("mobileApp", "$response")
-                            Log.d("mobileApp", "${response.body()}")
-                            binding.xmlRecyclerView.layoutManager =
-                                LinearLayoutManager(applicationContext)
-                            binding.xmlRecyclerView.adapter =
-                                XmlAdapter(response.body()!!.body!!.items!!.item)
-                            binding.xmlRecyclerView.addItemDecoration(
-                                DividerItemDecoration(
-                                    applicationContext,
-                                    LinearLayoutManager.VERTICAL
-                                )
-                            )
+                            Log.d("mobileapp", "$response")
+                            Log.d("mobileapp", "${response.body()}")
+                            binding.xmlRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+                            binding.xmlRecyclerView.adapter = XmlAdapter(response.body()!!.body!!.items!!.item)
+                            binding.xmlRecyclerView.addItemDecoration(DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL))
                         }
                     }
 
                     override fun onFailure(call: Call<XmlResponse>, t: Throwable) {
-                        Log.d("mobileApp", "onFailure ${call.request()}")
+                        Log.d("mobileapp", "onFailure ${call.request()}")
                     }
                 })
             }
             else{
-                Toast.makeText(this,"인증을 먼저 진행해주세요..", Toast.LENGTH_LONG)
+                Toast.makeText(this, "인증을 먼저 진행해주세요..",Toast.LENGTH_LONG).show()
             }
+
         } // binding.btnSearch.setOnClickListener
 
     }
@@ -111,6 +107,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (toggle.onOptionsItemSelected(item)) {
             return true
         }
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -124,9 +121,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 binding.drawer.closeDrawers()
                 true
             }
-
             R.id.item_setting -> {
                 Log.d("mobileapp", "설정 메뉴")
+                //val intent = Intent(this, SettingActivity::class.java)
+                //startActivity(intent)
                 binding.drawer.closeDrawers()
                 true
             }
@@ -149,5 +147,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             tv.text = "안녕하세요.."
         }
     }
-
 }
