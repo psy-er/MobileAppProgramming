@@ -1,14 +1,11 @@
 package com.example.ch18_image2
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.ch18_image2.databinding.ActivityAuthBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -26,11 +23,9 @@ class AuthActivity : AppCompatActivity() {
 
         changeVisibility(intent.getStringExtra("status").toString())
 
-
         binding.goSignInBtn.setOnClickListener {    // 회원 가입 Button
             changeVisibility("signin")
         }
-
 
         binding.signBtn.setOnClickListener {    // 가입 Button
             val email = binding.authEmailEditView.text.toString()
@@ -40,7 +35,7 @@ class AuthActivity : AppCompatActivity() {
                     binding.authEmailEditView.text.clear()
                     binding.authPasswordEditView.text.clear()
                     if(task.isSuccessful){
-                        MyApplication.auth.currentUser?.sendEmailVerification() // 2차 인증
+                        MyApplication.auth.currentUser?.sendEmailVerification()
                             ?.addOnCompleteListener{sendTask ->
                                 if(sendTask.isSuccessful){
                                     Toast.makeText(baseContext,"회원가입 성공!!.. 메일을 확인해주세요",Toast.LENGTH_SHORT).show()
@@ -161,16 +156,14 @@ class AuthActivity : AppCompatActivity() {
                 googleLoginBtn.visibility = View.VISIBLE
             }
         }
-        else if(mode.equals("signin")){ // 회원가입 버튼 클릭 : 회원가입 진행 상태
+        else if(mode.equals("signin")){    // 회원가입 버튼 클릭 : 회원가입 진행 상태
             binding.run{
                 authMainTextView.visibility = View.GONE
                 logoutBtn.visibility = View.GONE
                 goSignInBtn.visibility = View.GONE
-
                 authEmailEditView.visibility = View.VISIBLE
                 authPasswordEditView.visibility = View.VISIBLE
                 signBtn.visibility = View.VISIBLE
-
                 loginBtn.visibility= View.GONE
                 googleLoginBtn.visibility = View.GONE
             }

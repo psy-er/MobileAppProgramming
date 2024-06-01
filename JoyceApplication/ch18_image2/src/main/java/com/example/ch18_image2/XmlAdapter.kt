@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ch18_image2.databinding.ItemMainBinding
+import com.example.ch18_image2.myXmlItem
 
 class XmlViewHolder(val binding: ItemMainBinding): RecyclerView.ViewHolder(binding.root)
 class XmlAdapter(val datas:MutableList<myXmlItem>?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {     // 1-1
@@ -35,5 +36,4 @@ class XmlAdapter(val datas:MutableList<myXmlItem>?): RecyclerView.Adapter<Recycl
             .override(400,300)
             .into(binding.urlImage2)
     }
-
 }
